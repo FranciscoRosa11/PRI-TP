@@ -1,12 +1,19 @@
 extends layout
 
 block content
-  h1 Autenticação com Node.js
-  p Chegaste à homepage...
-  ul
-    li
-      a(href="/users/login") Login
-    li
-      a(href="/users/register") Registo
-    li
-      a(href="/protegida") Protegida
+
+  .w3-light-blue
+    header.w3-container.w3-theme-d4
+      h4
+        button.w3-margin-bottom.w3-right.w3-button.w3-round-large.w3-text-white.w3-hover-opacity
+          a(href='/users/login').w3-right Login
+        button.w3-margin-bottom.w3-right.w3-button.w3-round-large.w3-text-white.w3-hover-opacity
+          a(href='/users/register').w3-right Register
+
+    
+    .w3-container.w3-padding-64.w3-theme-d2.w3-margin-top.w3-text-white
+      h1.w3-center Plataforma de Gestão e Disponibilização de Recursos Educativos
+
+    footer
+      .w3-container.w3-theme-d4.w3-margin-top
+        p.w3-text-white PRI2020
