@@ -14,7 +14,7 @@ const FileStore = require('session-file-store')(session)
 // Configuração da estratégia local
 passport.use(new LocalStrategy(
   {usernameField: 'id'}, (username, password, done) => {
-    axios.get('http://localhost:7709/users/' + username)
+    axios.get('http://localhost:3000/users/' + username)
       .then(dados => {
         const user = dados.data
         if(!user) { return done(null, false, {message: 'Utilizador inexistente!\n'})}
@@ -41,6 +41,7 @@ passport.deserializeUser((uid, done) => {
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var recursoRouter = require('./routes/recurso');
 
 var app = express();
 
@@ -48,7 +49,7 @@ app.use(session({
   genid: req => {
     return uuidv4()},
     store: new FileStore(),
-    secret: 'O meu segredo',
+    secret: 'PRI-2020-TP',
     resave: false,
     saveUninitialized: true
 }))
@@ -60,7 +61,8 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser('O meu segredo'));
+app.use(cookieParser('PRI-2020-TP'));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());
@@ -74,6 +76,7 @@ app.use(function(req, res, next){
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+//app.use('/recurso', recursoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

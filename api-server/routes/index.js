@@ -1,20 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-function vericaNivel( a, b) {
-  return a == b
-}
+const Tarefa = require('../controllers/tarefa')
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.status(200).jsonp({dados: "Lista publica"});
-});
-
-router.get('/secreta', function(req, res) {
-  if(vericaNivel('admin', req.user.level))
-    res.status(200).jsonp({dados: "Lista secreta"});
-  else
-    res.status(401).jsonp({error: "Não tem autorização para aceder a esta rota!"})
+// Listar todos os users
+// Consultar user
+router.get('/users/:id', function(req, res) {
+  axios.get("http://localhost:7910/users/" + req.params.id)
+    .then(dados => res.status(200).jsonp(dados))
+    .catch(e => res.status(500).jsonp({error: e}))
 });
 
 module.exports = router;
