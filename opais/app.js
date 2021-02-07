@@ -13,15 +13,15 @@ const FileStore = require('session-file-store')(session)
 
 // Configuração da estratégia local
 passport.use(new LocalStrategy(
-  {usernameField: 'id'}, (username, password, done) => {
-    axios.get('http://localhost:3000/users/' + username)
+  {usernameField: 'username'}, (username, password, done) => {
+    axios.get('http://localhost:7710/users/' + username)
       .then(dados => {
         const user = dados.data
-        if(!user) { return done(null, false, {message: 'Utilizador inexistente!\n'})}
+        if(!user) {  return done(null, false, {message: 'Utilizador inexistente!\n'})}
         if(password != user.password) { return done(null, false, {message: 'Credenciais inválidas!\n'})}
         return done(null, user)
       })
-      .catch(erro => done(erro))
+      .catch(e => done(e))
     })
 )
 

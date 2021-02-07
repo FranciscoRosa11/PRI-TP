@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose')
-var usersRouter = require('./routes/users');
 
 mongoose.connect('mongodb://127.0.0.1:27017/OPAIS', 
       { useNewUrlParser: true,
@@ -16,6 +15,10 @@ db.on('error', console.error.bind(console, 'Erro de conexão ao MongoDB...'));
 db.once('open', function() {
   console.log("Conexão ao MongoDB realizada com sucesso...")
 });
+
+var User = require('./controllers/user')
+
+var usersRouter = require('./routes/users');
 
 var app = express();
 

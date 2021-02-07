@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "fbraga",
+      "nome": "Francisco",
+      "email": "meuEmail@email.com",
+      "filiacao": "estudante",
+      "nivel": "consumidor",
+      "dataRegisto": "2020-10-10",
+      "dataUltimoAcesso": "2021-01-01",
+      "password": "pass"
+    },
+    {
+      "id": 1,
+      "username": "pedro",
+      "nome": "Pedro",
+      "email": "pedroEmail@email.com",
+      "filiacao": "estudante",
+      "nivel": "consumidor",
+      "dataRegisto": "2020-10-10",
+      "dataUltimoAcesso": "2021-01-01",
+      "password": "pass"
+    }
+  ]
+}

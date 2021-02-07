@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require('../controllers/user')
 
 var passport = require('passport')
+var jwt = require('jsonwebtoken')
 
 // Login page
 router.get('/login', function(req, res) {
@@ -19,29 +20,30 @@ router.get('/logout', function(req, res){
     }
   });
 });
-  
-router.post('/login', function(req, res){
+
+router.post('/login', function(req,res) {
   jwt.sign({username: req.body.username, 
-    level:  req.body.level,
-    sub: 'PRI-2020'}, "PRI-2020-TP", function(e,token) {
-      if(e) res.status(500).jsonp({error: "Erro na geração do token: " + e}) 
-      else{
-        var d = new Date().toISOString().slice(0, 16).split('T').join(' ')
-        User.consultar(req.body.username)
-          .then(dados => {
-            data = dados.dataUltimoAcesso;
-            User.changeLastAccess(req.body.username, d)
-              .then(
-                res.status(201).jsonp({token: token}))
-              .catch(e => res.status(500).jsonp({error: "Erro updating last acess: " + e}) )
-          })
-          .catch(e => res.status(500).jsonp({error: "Erro no consultar: " + e}))
-        
-      }
-    })
+            level:  req.body.level,
+            sub: 'Projeto PRI2020'}, "PRI2020", function(e,token) {
+              if(e) res.status(500).jsonp({error: "Erro na geração do token: " + e}) 
+              else{
+                var d = new Date().toISOString().slice(0, 16).split('T').join(' ')
+                User.consultar(req.body.username)
+                  .then(dados => {
+                    data = dados.dataLastAcess;
+                    User.alterarLastAcess(req.body.username, d)
+                      .then(dados => {
+                        
+                      })
+                      .catch(e => res.status(500).jsonp({error: "Erro updating last acess: " + e}) )
+                  })
+                  .catch(e => res.status(500).jsonp({error: "Erro no consultar: " + e}))
+                
+              }
+            })
 })
 
-router.post('/register', function(req,res) {
+router.post('/registar', function(req,res) {
   console.log(req.body)
   req.body.dataRegisto = new Date().toISOString().slice(0, 16).split('T').join(' ')
   req.body.dataUltimoAcesso = ''

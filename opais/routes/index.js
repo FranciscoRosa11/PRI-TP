@@ -33,33 +33,35 @@ router.get('/', checkAuth, function(req, res) {
 });
 
 router.get('/login', function(req,res) {
-  res.render('login-form')
-})
+  if (req.query.erro) res.render('login-form', {erro: "erro", user: ""})
+  else res.render('login-form', {user: ""})
+});
 
-router.post('/login', passport.authenticate('local'), function(req, res) {
-  
-  axios.post('http://localhost:3000/users/login', req.user)
+router.post('/login', passport.authenticate('local', { failureRedirect: '/login?erro=autenticacao' }),
+function(req, res) {
+  axios.post('http://localhost:7710/users/login', req.user)
     .then(dados => {
+      
       res.cookie('token', dados.data.token, {
         maxAge : new Date(Date.now() + 3600000),
         secure: false, // set to true if your using https
         httpOnly: true
       });
-      res.redirect('/main')
+      res.redirect('/')
     })
     .catch(e => res.render('login-form', {erro: e, user: req.body.username}))
-});
+})
 
 router.get('/main', verificaAutenticacao, function (req,res) {
   res.render('protegida', {utilizador: req.user.id})
 })
 
 router.get('/register', function(req,res) {
-  res.render('register-form')
+  res.render('register-form', {user: "", email: "", fil: ""})
 })
 
 router.post('/register', function(req,res) {
-  axios.post('http://localhost:3000/users/register', req.body)
+  axios.post('http://localhost:7710/users/registar', req.body)
     .then(dados => res.redirect('/'))
     .catch(e => res.render('register-form', {error:e, user: req.body.username, email: req.body.email, fil: req.body.filiacao}))
 })
