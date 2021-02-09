@@ -8,9 +8,9 @@ module.exports.listar = () => {
         .exec()
 }
 
-module.exports.consultar = id => {
+module.exports.consultar = name => {
     return User
-        .findOne({_id: id})
+        .findOne({username: name})
         .exec()
 }
 

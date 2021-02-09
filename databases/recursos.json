@@ -1,0 +1,18 @@
+[
+    {
+        "tipo": "pdf",
+        "titulo": "Problemas em Estatística",
+        "dataRegisto": "2020-10-10",
+        "visibilidade": "privado",
+        "dataCriacao": "2018-11-11",
+        "autor": "José dos Ameixos"
+    },
+    {
+        "tipo": "zip",
+        "titulo": "Problemas em Estatística",
+        "dataRegisto": "2019-10-10",
+        "visibilidade": "pública",
+        "dataCriacao": "2018-11-11",
+        "autor": "José dos Ameixos"
+    }
+]

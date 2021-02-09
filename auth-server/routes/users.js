@@ -22,20 +22,13 @@ router.get('/logout', function(req, res){
 });
 
 router.post('/login', function(req,res) {
-  jwt.sign({username: req.body.username, 
-            level:  req.body.level,
-            sub: 'Projeto PRI2020'}, "PRI2020", function(e,token) {
+  console.log(req.body)
+  jwt.sign({username: req.body.username}, "PRI-2020-TP", function(e,token) {
               if(e) res.status(500).jsonp({error: "Erro na geração do token: " + e}) 
               else{
-                var d = new Date().toISOString().slice(0, 16).split('T').join(' ')
                 User.consultar(req.body.username)
                   .then(dados => {
-                    data = dados.dataLastAcess;
-                    User.alterarLastAcess(req.body.username, d)
-                      .then(dados => {
-                        
-                      })
-                      .catch(e => res.status(500).jsonp({error: "Erro updating last acess: " + e}) )
+                    dados => res.status(201).jsonp({token: token})
                   })
                   .catch(e => res.status(500).jsonp({error: "Erro no consultar: " + e}))
                 
